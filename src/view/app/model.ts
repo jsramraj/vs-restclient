@@ -15,5 +15,5 @@ export interface ICommand {
 }
 
 export enum CommandAction {
-  Save
+  Save,
 }

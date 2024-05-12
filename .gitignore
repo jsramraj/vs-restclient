@@ -4,4 +4,4 @@ node_modules
 .vscode-test/
 *.vsix
 
-configViewer/configViewer.js
+restClient/restClient.js

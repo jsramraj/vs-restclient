@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
+import { parseHttpContent, readHttpContent } from "./utils/http-parser";
 
 export class HttpEditProvider implements vscode.CustomTextEditorProvider {
   public static register(context: vscode.ExtensionContext): vscode.Disposable {
@@ -23,17 +24,18 @@ export class HttpEditProvider implements vscode.CustomTextEditorProvider {
     webviewPanel.webview.options = {
       enableScripts: true,
     };
+    console.log("Reading http content");
+    const httpContent = readHttpContent(document);
+    const parsedValues = parseHttpContent(httpContent);
+    console.log("Parsed values", parsedValues);
+
     webviewPanel.webview.html = this.getWebviewContent();
   }
 
   private getWebviewContent(): string {
     // Local path to main script run in the webview
     const reactAppPathOnDisk = vscode.Uri.file(
-      path.join(
-        this.context.extensionUri.path,
-        "configViewer",
-        "configViewer.js"
-      )
+      path.join(this.context.extensionUri.path, "restClient", "restClient.js")
     );
     const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
 
