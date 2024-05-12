@@ -17,3 +17,17 @@ export interface ICommand {
 export enum CommandAction {
   Save,
 }
+
+export type HttpConstant = { name: string; value: string };
+export type HttpRequest = {
+  name: string;
+  method: string;
+  url: string;
+  headers: Record<string, string>;
+  body: string;
+};
+
+export type HttpContent = {
+  constants: HttpConstant[];
+  requests: HttpRequest[];
+};

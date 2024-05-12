@@ -2,8 +2,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import "./index.css";
-import { IConfig } from "./model";
+import { IConfig } from "../models/model";
 import Config from "./config";
+import RootPanel from "./components/root-panel";
 
 declare global {
   interface Window {
@@ -15,6 +16,7 @@ declare global {
 const vscode = window.acquireVsCodeApi();
 
 ReactDOM.render(
-  <Config vscode={vscode} initialData={window.initialData} />,
+  <RootPanel initialData={window.initialData} />,
+  // <Config vscode={vscode} initialData={window.initialData} />,
   document.getElementById("root")
 );

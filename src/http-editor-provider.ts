@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { parseHttpContent, readHttpContent } from "./utils/http-parser";
+import { HttpRequest, HttpConstant, HttpContent } from "./view/models/model";
 
 export class HttpEditProvider implements vscode.CustomTextEditorProvider {
   public static register(context: vscode.ExtensionContext): vscode.Disposable {
@@ -29,17 +30,18 @@ export class HttpEditProvider implements vscode.CustomTextEditorProvider {
     const parsedValues = parseHttpContent(httpContent);
     console.log("Parsed values", parsedValues);
 
-    webviewPanel.webview.html = this.getWebviewContent();
+    webviewPanel.webview.html = this.getWebviewContent(parsedValues);
   }
 
-  private getWebviewContent(): string {
+  private getWebviewContent(content: HttpContent): string {
     // Local path to main script run in the webview
     const reactAppPathOnDisk = vscode.Uri.file(
       path.join(this.context.extensionUri.path, "restClient", "restClient.js")
     );
     const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
 
-    const configJson = `{"description":"This is a file containing a dummy config in order to test a webview react in VS Code.","name":"my config","users":[{"active":true,"name":"alice","roles":["user","admin"]},{"active":true,"name":"bob","roles":["user"]},{"active":false,"name":"charlie","roles":["user"]}]}`;
+    // const configJson = `{"description":"This is a file containing a dummy config in order to test a webview react in VS Code.","name":"my config","users":[{"active":true,"name":"alice","roles":["user","admin"]},{"active":true,"name":"bob","roles":["user"]},{"active":false,"name":"charlie","roles":["user"]}]}`;
+    const requests = JSON.stringify(content);
 
     return `<!DOCTYPE html>
     <html lang="en">
@@ -56,7 +58,7 @@ export class HttpEditProvider implements vscode.CustomTextEditorProvider {
 
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
-          window.initialData = ${configJson};
+          window.initialData = ${requests};
         </script>
     </head>
     <body>

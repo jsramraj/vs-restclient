@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IConfig, IUser, ICommand, CommandAction } from "./model";
+import { IConfig, IUser, ICommand, CommandAction } from "../models/model";
 
 interface IConfigProps {
   vscode: any;
@@ -34,8 +34,8 @@ export default class Config extends React.Component<
 
   onChangeUserActiveState(userIndex: number) {
     let newState = { ...this.state };
-    newState.config.users[userIndex].active = !newState.config.users[userIndex]
-      .active;
+    newState.config.users[userIndex].active =
+      !newState.config.users[userIndex].active;
 
     this.defineState(newState);
   }
@@ -55,7 +55,7 @@ export default class Config extends React.Component<
       let newUser: IUser = {
         name: event.currentTarget.value,
         active: true,
-        roles: []
+        roles: [],
       };
       newState.config.users.push(newUser);
       this.defineState(newState);
@@ -90,7 +90,7 @@ export default class Config extends React.Component<
                     <input
                       type="text"
                       placeholder="Add Role"
-                      onKeyUp={event => this.onAddRole(event, userIndex)}
+                      onKeyUp={(event) => this.onAddRole(event, userIndex)}
                     />
                   </li>
                 );
@@ -100,7 +100,7 @@ export default class Config extends React.Component<
         <input
           type="text"
           placeholder="Add User"
-          onKeyUp={event => this.onAddUser(event)}
+          onKeyUp={(event) => this.onAddUser(event)}
         />
       </React.Fragment>
     );
@@ -126,7 +126,7 @@ export default class Config extends React.Component<
   saveConfig() {
     let command: ICommand = {
       action: CommandAction.Save,
-      content: this.state.config
+      content: this.state.config,
     };
     this.props.vscode.postMessage(command);
   }
