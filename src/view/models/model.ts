@@ -19,6 +19,7 @@ export enum CommandAction {
 }
 
 export type HttpConstant = { name: string; value: string };
+
 export type HttpRequest = {
   name: string;
   method: string;
@@ -27,7 +28,12 @@ export type HttpRequest = {
   body: string;
 };
 
-export type HttpContent = {
+export type HttpCollection = {
+  name: string;
   constants: HttpConstant[];
   requests: HttpRequest[];
+};
+
+export type HttpContent = {
+  collections: HttpCollection[];
 };

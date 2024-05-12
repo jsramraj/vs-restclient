@@ -78,6 +78,7 @@
     "@types/vscode": "^1.89.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "styled-components": "^6.1.11",
     "vscode": "^1.1.37"
   }
 }
